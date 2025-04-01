@@ -1,34 +1,17 @@
-from selenium import webdriver
+from .base_page import BasePage # from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
-import time
-
-link = "http://selenium1py.pythonanywhere.com/"
-
-# link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
-#
-#
-# def test_guest_should_see_button_addtocart(browser):
-#     browser.get(link)
-#     time.sleep(30)
-#     button = browser.find_element(By.CSS_SELECTOR, ".btn-add-to-basket")
-#     assert button, "Кнопка добавления в корзину не найдена!"
-
-# def test_guest_can_go_to_login_page(browser):
-#     browser.get(link)
-#     login_link = browser.find_element(By.CSS_SELECTOR, "#login_link")
-#     login_link.click()
 
 
-# дробим действия:
+class MainPage(BasePage):
 
-# вынесли сюда  нахождение элемента и клик по нему
-def go_to_login_page(browser):
-    login_page_link = browser.find_element(By.CSS_SELECTOR, "#login_page_link_selector")
-    login_page_link.click()
+    # вынесли сюда  нахождение элемента и клик по нему
+    # def go_to_login_page(browser):
+    #     login_page_link = browser.find_element(By.CSS_SELECTOR, "#login_page_link_selector")
+    #     login_page_link.click()
 
-# а тут только запускаем браузер и т д - см фикстуру browser в conftest.py
-def test_guest_can_go_to_login_page(browser):
-    browser.get(link)
-    # вызываем предыдущий метод в котором  находим элемент и кликаем по нему
-    go_to_login_page(browser)
-
+    # видоизменили метод выше чтоб все работало
+    # браузер больше не передаем в аргумент т к передаем и сохраняем на этапе создания page object, поэтому теперь указываем self
+    def go_to_login_page(self):
+        # тк браузер у нас хранится как аргумент класса BasePage, обращаться теперь к нему нужно с помощью self
+        login_page_link = self.browser.find_element(By.ID, "login_link")
+        login_page_link.click()
