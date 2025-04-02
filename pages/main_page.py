@@ -15,3 +15,14 @@ class MainPage(BasePage):
         # тк браузер у нас хранится как аргумент класса BasePage, обращаться теперь к нему нужно с помощью self
         login_page_link = self.browser.find_element(By.ID, "login_link")
         login_page_link.click()
+
+
+
+    # # Методы-проверки в Page Object
+    # def should_be_login_link(self):
+    #     self.browser.find_element(By.CSS_SELECTOR, "#login_link_invalid")
+
+    # Проверка элемента на странице - изменили метод проверки ссылки на логин, чтобы он выдавал адекватное сообщение об ошибке:
+    def should_be_login_link(self):
+        #assert self.is_element_present(By.CSS_SELECTOR, "#login_link_invalid"), "Login link is not presented"
+        assert self.is_element_present(By.ID, "login_link"), "Login link is presented"
