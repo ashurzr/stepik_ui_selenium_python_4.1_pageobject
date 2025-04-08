@@ -3,8 +3,11 @@ from selenium.webdriver.common.by import By
 # чтоб вынести селектор во внешнюю переменную - импортим из locators.py класс MainPageLocators
 from .locators import MainPageLocators
 
-class MainPage(BasePage):
+# реализуем переход способ 1 - возвращаем нужный page object
+from .login_page import LoginPage # делаем импорт старницы с логином
 
+
+class MainPage(BasePage):
     # вынесли сюда  нахождение элемента и клик по нему
     # def go_to_login_page(browser):
     #     login_page_link = browser.find_element(By.CSS_SELECTOR, "#login_page_link_selector")
@@ -20,10 +23,20 @@ class MainPage(BasePage):
     #     assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
     #     #login_page_link.click() # NameError: name 'login_page_link' is not defined
 
-    def go_to_login_page(self): # метод перехода с мейна на страницу логина - метод находит элемент на странице и кликает по нему
-        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
+    # def go_to_login_page(self): # метод перехода с мейна на страницу логина - метод находит элемент на странице и кликает по нему
+    #     assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
+    #     login_link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
+    #     login_link.click()
+
+
+    # реализуем переход способ 1 - возвращаем нужный page object
+    # инциализируем новый объект page и возвращаем его
+    def go_to_login_page(self):
         login_link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
         login_link.click()
+        # способ 2 - переход неявный, страницу инициализируем в теле теста
+        # комментим -> #return LoginPage(browser=self.browser, url=self.browser.current_url) # передаем тот же самый объект браузера а в url текущий адрес
+
 
     # # Методы-проверки в Page Object
     # def should_be_login_link(self):

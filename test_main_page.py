@@ -6,6 +6,9 @@ import time
 from pages.main_page import MainPage
 
 from pages.login_page import LoginPage
+# способ 2 - переход неявный, страницу инициализируем в теле теста
+#from .login_page import LoginPage # делаем импорт страницы с логином
+
 
 # link = "http://selenium1py.pythonanywhere.com/"
 
@@ -38,15 +41,33 @@ from pages.login_page import LoginPage
 #     go_to_login_page(browser)
 
 
-# теперь перепишем тест с помощью Page Object
+# # теперь перепишем тест с помощью Page Object
+# def test_guest_can_go_to_login_page(browser):
+#
+#     link = "http://selenium1py.pythonanywhere.com/"
+#     #link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209?promo=midsummer" # ссылка шапки промоакции
+#
+#     page = MainPage(browser, link)   # инициализируем Page Object,  передаем браузер и ссылку  в конструктор BasePage
+#     page.open()                      # открываем страницу
+#     page.go_to_login_page()          # выполняем метод страницы — переходим на страницу логина
+
+# # реализуем переход способ 1 - возвращаем нужный page object
+# # теперь в тесте не нужно думать про инициализацию страницы т к она уже создана
+# def test_guest_can_go_to_login_page(browser):
+#     link = "http://selenium1py.pythonanywhere.com/"
+#     page = MainPage(browser, link)
+#     page.open()
+#     login_page = page.go_to_login_page()
+#     login_page.should_be_login_page()
+
+# способ 2 - переход неявный, LoginPage инициализируем в теле теста
 def test_guest_can_go_to_login_page(browser):
-
     link = "http://selenium1py.pythonanywhere.com/"
-    #link = "http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209?promo=midsummer" # ссылка шапки промоакции
-
-    page = MainPage(browser, link)   # инициализируем Page Object,  передаем браузер и ссылку  в конструктор BasePage
-    page.open()                      # открываем страницу
-    page.go_to_login_page()          # выполняем метод страницы — переходим на страницу логина
+    page = MainPage(browser, link)
+    page.open()
+    page.go_to_login_page()
+    login_page = LoginPage(browser, browser.current_url)
+    login_page.should_be_login_page()
 
 
 # Методы-проверки в Page Object - новый тест
