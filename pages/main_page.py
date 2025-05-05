@@ -38,6 +38,15 @@ class MainPage(BasePage):
         # комментим -> #return LoginPage(browser=self.browser, url=self.browser.current_url) # передаем тот же самый объект браузера а в url текущий адрес
 
 
+    # Удобство поддержки тестов - инкапсуляция бизнес-логики в методах
+    # например есть метод:
+    def go_to_login_page(self):
+        link = self.browser.find_element(By.CSS_SELECTOR, "#login_link")
+        link.click()
+        alert = self.browser.switch_to.alert # и в него добавили обработку alertа вместо того чтоб добавлять alert в тест
+        alert.accept()
+
+
     # # Методы-проверки в Page Object
     # def should_be_login_link(self):
     #     self.browser.find_element(By.CSS_SELECTOR, "#login_link_invalid")

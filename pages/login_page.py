@@ -1,4 +1,4 @@
-# Реализация LoginPage
+# Реализация методов для LoginPage
 
 from .base_page import BasePage
 
@@ -23,4 +23,3 @@ class LoginPage(BasePage):
     def should_be_register_form(self):
         # реализуйте проверку, что есть форма регистрации на странице
         assert self.is_element_present(*LoginPageLocators.REGISTRATION_FORM), "Registration form is not presented" # из файла locators.py
-

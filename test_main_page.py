@@ -80,7 +80,7 @@ def test_guest_should_see_login_link(browser):
 
 
 
-# Реализация LoginPage
+# Реализация тестов для LoginPage
 # из login_page.py  тестим  def should_be_login_page(self):
 #         self.should_be_login_url()
 #         self.should_be_login_form()
