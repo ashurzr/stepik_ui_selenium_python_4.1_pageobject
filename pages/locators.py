@@ -37,3 +37,12 @@ class ProductPageLocators():
     # название товара в сообщ совпадает с названием товара который добавили
     ITEM_NAME = (By.CSS_SELECTOR, ".col-sm-6.product_main h1")
     ITEM_NAME_IN_MESSAGE = (By.CSS_SELECTOR, ".alertinner strong")
+
+
+
+
+# Отрицательные проверки: как проверить отсутствие элемента - проверяем success message 
+    
+    # локатор для success message - первое сообщение что книга добавлена в корзину - the shellcoders's handbook has been added to your basket
+    # Coders at Work был добавлен в вашу корзину
+    SUCCESS_MESSAGE = (By.CSS_SELECTOR, ".alert-success .alertinner")

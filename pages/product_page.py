@@ -16,7 +16,7 @@ class ProductPage(BasePage):
         assert self.is_element_present(*ProductPageLocators.BUTTON), "отсутствует кнопка Добавить в корзину"
 
 
-    # методы-проверки:
+# методы-проверки:
     def should_be_message_item_is_added_to_cart(self):
         item_added_message = self.browser.find_element(*ProductPageLocators.ITEM_ADDED_MESSAGE) # получаем 
         assert "был добавлен в вашу корзину" in item_added_message.text.lower() # есть сообщ о том что товар добавлен в корзину; lower() преобразует заглавные буквы в строчные
@@ -77,3 +77,30 @@ class ProductPage(BasePage):
         print(f"item_price_in_cart_message: '{item_price_in_cart_message}'")
         
         assert item_price == item_price_in_cart_message # стоимость корзины совпадает со стоимостью товара
+
+
+
+
+# Отрицательные проверки: как проверить отсутствие элемента - проверяем success message 
+    
+    # элемент не появляется на странице в течение заданного времени is_not_element_present
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is presented, but should not be"
+
+    # элемент исчезает is_disappeared
+    def should_success_message_disappear(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message did not disappear, but should have"
+
+
+    # позитивная проверка is_element_present
+    def should_be_success_message(self):
+        assert self.is_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+            "Success message is not presented, but should be"
+
+        # для print
+        success_message = self.browser.find_element(*ProductPageLocators.SUCCESS_MESSAGE).text  # .text возвращает весь видимый текст, который содержится внутри этого элемента и его вложенных тегов.
+        print(f"success_message: '{success_message}'") # 'The shellcoder's handbook был добавлен в вашу корзину.'
+
+        

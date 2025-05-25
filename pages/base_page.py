@@ -63,3 +63,29 @@ class BasePage():
             alert.accept()
         except (NoAlertPresentException, TimeoutException):
             print("No second alert presented")
+
+
+
+
+# Отрицательные проверки: как проверить отсутствие элемента - проверяем success message 
+    
+    # элемент не появляется на странице в течение заданного времени is_not_element_present
+    def is_not_element_present(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return True
+
+        return False
+
+    # элемент исчезает is_disappeared
+    def is_disappeared(self, how, what, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException). \
+                until_not(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+
+        return True
+
+    

@@ -18,21 +18,23 @@ def wait_for_element(browser, locator, timeout=10):
 
 
 # Реализация тестов для ProductPage
-# def test_guest_can_add_product_to_basket(browser):
+def test_guest_can_add_product_to_basket(browser):
+    
 # параметризовали:
-@pytest.mark.parametrize('link',
-                         ["http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer0",
-                          "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer1",
-                          "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer2",
-                          "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer3",
-                          "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer4",
-                          "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer5",
-                          "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer6",
-                          pytest.param("http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7", marks=pytest.mark.xfail),
-                          "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer8",
-                          "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer9"])
-def test_guest_can_add_product_to_basket(browser, link):
-    #link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+# @pytest.mark.parametrize('link',
+#                          ["http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer0",
+#                           "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer1",
+#                           "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer2",
+#                           "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer3",
+#                           "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer4",
+#                           "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer5",
+#                           "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer6",
+#                           pytest.param("http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer7", marks=pytest.mark.xfail),
+#                           "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer8",
+#                           "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer9"])
+#def test_guest_can_add_product_to_basket(browser, link):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+    #link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/"
     #link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019"
     #link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=newYear2019"
     #link = "http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/?promo=offer0"
@@ -48,6 +50,7 @@ def test_guest_can_add_product_to_basket(browser, link):
     wait_for_element(browser, ProductPageLocators.ITEM_ADDED_MESSAGE)
     page.should_be_message_item_is_added_to_cart() # есть сообщ о том что товар добавлен в корзину
 
+    #time.sleep(30)
 
     item_name = page.get_item_name()
     wait_for_element(browser, ProductPageLocators.ITEM_NAME_IN_MESSAGE)
@@ -67,6 +70,111 @@ def test_guest_can_add_product_to_basket(browser, link):
     #time.sleep(120)
     #wait_for_element(browser, ProductPageLocators.ITEM_PRICE_IN_BASKET)
     page.should_be_item_price_added_to_cart_equals_item_price(item_price) # передаем item_price котор станет expected_price
+
+
+
+
+# Отрицательные проверки: как проверить отсутствие элемента - проверяем success message 
+
+# он же test_guest_cant_see_success_message №2
+# Негативный тест: сообщение НЕ должно появляться само по себе
+def test_success_message_is_not_present(browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_not_be_success_message()
+
+
+# он же test_message_disappeared_after_adding_product_to_basket №3
+# Негативный тест: сообщение должно исчезнуть - а вот этот кейс не подходит - у нас же не исчезает сообщение а остается !!!!!!!!
+@pytest.mark.xfail
+def test_success_message_disappears_after_adding_product_to_basket(browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+    page = ProductPage(browser, link)
+    page.open()
+
+    # д вия должны быть чтоб сообщ сперва появилось
+    page.add_product_to_basket()
+    page.solve_quiz_and_get_code()
+
+    # и тут сообщ уже должно исчезнуть
+    page.should_success_message_disappear()
+
+
+
+# Позитивный тест: сообщение появляется после добавления товара
+def test_success_message_appears_after_adding_product_to_basket(browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+    page = ProductPage(browser, link)
+    page.open()
+
+    # д вия должны быть чтоб сообщ появилось
+    page.add_product_to_basket()
+    page.solve_quiz_and_get_code()
+
+    page.should_be_success_message()
+
+
+
+# test_guest_cant_see_success_message_after_adding_product_to_basket №1
+# дописываю тест которого у меня нет - проверка что нет сообщения после добавления товара - тест упадет т к есть
+@pytest.mark.xfail
+def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+    page = ProductPage(browser, link)
+    page.open()
+
+    # д вия должны быть чтоб сообщ появилось
+    page.add_product_to_basket()
+    page.solve_quiz_and_get_code()
+
+    page.should_not_be_success_message()
+
+
+
+
+
+
+
+
+
+# # без параметризации
+#
+# # Реализация тестов для ProductPage
+# def test_guest_can_add_product_to_basket(browser):
+#     link = "http://selenium1py.pythonanywhere.com/ru/catalogue/the-shellcoders-handbook_209/?promo=newYear"
+#     page = ProductPage(browser, link)
+#     page.open()  # 1й шаг
+#
+#     WebDriverWait(browser, 10).until(EC.presence_of_element_located(ProductPageLocators.BUTTON))
+#     page.add_product_to_basket()  # 2й шаг
+#     page.solve_quiz_and_get_code()  # 3й шаг теста
+#     # time.sleep(10)
+#
+#     wait_for_element(browser, ProductPageLocators.ITEM_ADDED_MESSAGE)
+#     page.should_be_message_item_is_added_to_cart()  # есть сообщ о том что товар добавлен в корзину
+#
+#     # time.sleep(30)
+#
+#     item_name = page.get_item_name()
+#     wait_for_element(browser, ProductPageLocators.ITEM_NAME_IN_MESSAGE)
+#     page.should_be_item_name_in_message_equals_item_name(
+#         item_name)  # название товара в сообщ совпадает с названием товара который добавили
+#
+#     wait_for_element(browser, ProductPageLocators.CART_PRICE_MESSAGE)
+#     page.should_be_message_cart_total_price()  # есть сообщ со стоимостью корзины
+#
+#     wait_for_element(browser, ProductPageLocators.ITEM_PRICE_IN_CART_MESSAGE)
+#     page.should_be_cart_total_price_equals_item_price()  # стоимость корзины совпадает со стоимостью товара
+#
+#     item_price = page.get_item_price()  # сохраняем цену товара, она станет expected_price
+#     page.go_to_basket()  # жмем на кнопку Посмотреть корзину
+#     # time.sleep(120)
+#     # wait_for_element(browser, ProductPageLocators.ITEM_PRICE_IN_BASKET)
+#     page.should_be_item_price_added_to_cart_equals_item_price(
+#         item_price)  # передаем item_price котор станет expected_price
+
+
 
 
 
