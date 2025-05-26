@@ -8,6 +8,13 @@ from .login_page import LoginPage # делаем импорт старницы �
 
 
 class MainPage(BasePage):
+    # Плюсы наследования: пример
+    # добавление заглушки т к отсюда забрали все методы и тут теперь пусто
+    def __init__(self, *args, **kwargs):
+        super(MainPage, self).__init__(*args, **kwargs)
+
+
+
     # вынесли сюда  нахождение элемента и клик по нему
     # def go_to_login_page(browser):
     #     login_page_link = browser.find_element(By.CSS_SELECTOR, "#login_page_link_selector")
@@ -29,31 +36,9 @@ class MainPage(BasePage):
     #     login_link.click()
 
 
-    # реализуем переход способ 1 - возвращаем нужный page object
-    # инциализируем новый объект page и возвращаем его
-    def go_to_login_page(self):
-        login_link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
-        login_link.click()
-        # способ 2 - переход неявный, страницу инициализируем в теле теста
-        # комментим -> #return LoginPage(browser=self.browser, url=self.browser.current_url) # передаем тот же самый объект браузера а в url текущий адрес
-
-
-    # Удобство поддержки тестов - инкапсуляция бизнес-логики в методах
-    # например есть метод:
-    def go_to_login_page(self):
-        link = self.browser.find_element(By.CSS_SELECTOR, "#login_link")
-        link.click()
-        alert = self.browser.switch_to.alert # и в него добавили обработку alertа вместо того чтоб добавлять alert в тест
-        alert.accept()
 
 
     # # Методы-проверки в Page Object
     # def should_be_login_link(self):
     #     self.browser.find_element(By.CSS_SELECTOR, "#login_link_invalid")
 
-    # Проверка элемента на странице - изменили метод проверки ссылки на логин, чтобы он выдавал адекватное сообщение об ошибке:
-    def should_be_login_link(self):
-        #assert self.is_element_present(By.CSS_SELECTOR, "#login_link_invalid"), "Login link is not presented"
-        #assert self.is_element_present(By.ID, "login_link"), "Login link is presented"
-        #assert self.is_element_present(By.ID, "registration_link"), "Login link is presented"
-        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"

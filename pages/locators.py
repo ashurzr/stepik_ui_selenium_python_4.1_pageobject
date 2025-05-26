@@ -46,3 +46,13 @@ class ProductPageLocators():
     # локатор для success message - первое сообщение что книга добавлена в корзину - the shellcoders's handbook has been added to your basket
     # Coders at Work был добавлен в вашу корзину
     SUCCESS_MESSAGE = (By.CSS_SELECTOR, ".alert-success .alertinner")
+
+
+
+# Плюсы наследования: пример
+class BasePageLocators():
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+
+
+    

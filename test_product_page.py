@@ -11,6 +11,12 @@ from pages.locators import ProductPageLocators
 import pytest
 
 
+# Плюсы наследования: пример
+from pages.login_page import LoginPage
+
+
+
+
 def wait_for_element(browser, locator, timeout=10):
     return WebDriverWait(browser, timeout).until(
         EC.presence_of_element_located(locator)
@@ -133,6 +139,40 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
 
 
 
+
+# Плюсы наследования: пример
+def test_guest_should_see_login_link_on_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = ProductPage(browser, link)
+    page.open()
+    page.should_be_login_link()
+
+
+def test_guest_can_go_to_login_page_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = ProductPage(browser, link)
+    page.open()
+
+
+    page.should_be_login_link()
+
+    page.go_to_login_page()
+    # def go_to_login_page(self):
+        # login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        # login_link.click()
+
+    # какбы сгенерели чтоли логин страницу
+    login_page = LoginPage(browser, browser.current_url)
+    # Здесь переключаемся с ProductPage на LoginPage, так как теперь мы на другой странице, и логика проверки (методы, локаторы) будет другой.
+    # Это как: «мы на новой странице, значит нам нужен объект этой новой страницы — LoginPage».
+
+    # и проверяем что это/там  логин страница
+    login_page.should_be_login_page()
+    # а это вот это в login_page.py
+    # def should_be_login_page(self):
+        # self.should_be_login_url()
+        # self.should_be_login_form()
+        # self.should_be_register_form()
 
 
 
