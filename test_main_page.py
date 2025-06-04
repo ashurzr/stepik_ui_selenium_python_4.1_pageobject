@@ -10,6 +10,11 @@ from pages.login_page import LoginPage
 #from .login_page import LoginPage # делаем импорт страницы с логином
 
 
+# Задание: наследование и отрицательные проверки
+from pages.basket_page import BasketPage
+
+
+
 # link = "http://selenium1py.pythonanywhere.com/"
 
 # link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
@@ -117,3 +122,29 @@ def test_should_be_register_form(browser):
 #     login_page.should_be_login_url()
 #     login_page.should_be_login_form()
 #     login_page.should_be_register_form()
+
+
+
+
+
+# Задание: наследование и отрицательные проверки
+def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
+
+# Гость открывает главную страницу
+    link = "http://selenium1py.pythonanywhere.com/ru/"
+    page = MainPage(browser, link)
+    page.open()
+
+
+# Переходит в корзину по кнопке в шапке сайта
+    page.view_basket() # используем метод перехода в корзину
+    basket_page = BasketPage(browser, browser.current_url)
+
+
+
+# Ожидаем, что в корзине нет товаров
+    basket_page.should_be_empty() # should_be_empty()
+
+# Ожидаем, что есть текст о том что корзина пуста
+    basket_page.should_be_text_cart_is_empty() # should_be_text_cart_is_empty()
+

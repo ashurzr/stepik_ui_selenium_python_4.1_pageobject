@@ -17,6 +17,11 @@ from .locators import BasePageLocators
 from selenium.common.exceptions import NoSuchElementException
 
 
+# Задание: наследование и отрицательные проверки
+from .locators import ProductPageLocators
+
+
+
 
 # это как бы реализация общих методов для любой страницы
 class BasePage():
@@ -130,3 +135,20 @@ class BasePage():
 
         assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
         #assert self.is_element_present(*BasePageLocators.LOGIN_LINK_INVALID), "Login link is not presented"
+        
+        
+
+        
+        
+# Задание: наследование и отрицательные проверки
+    # реализация метода перехода в корзину
+    def view_basket(self): # переход по кнопке Посмотреть корзину
+        self.should_be_view_cart_button()  # проверка наличия кнопки Посмотреть корзину, используем метод should_be_view_cart_button() - опишем в base page тоже вроде
+        button = self.browser.find_element(*BasePageLocators.BASKET_VIEW_BUTTON) # дб в BasePageLocators т к кнопка Посмотреть корзину она отовсюду доступна
+        button.click()
+
+
+    def should_be_view_cart_button(self):
+        assert self.is_element_present(*BasePageLocators.BASKET_VIEW_BUTTON), "Basket view button is not visible"
+
+

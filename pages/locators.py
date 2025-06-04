@@ -30,14 +30,14 @@ class ProductPageLocators():
     ITEM_PRICE_IN_CART_MESSAGE = (By.XPATH, "//div[@class='basket-mini pull-right hidden-xs']") # получили <selenium.webdriver.remote.webelement.WebElement (session="8cf53978b2a681aede9bcecfb1f49910", element="f.0D0A1099B07B827BB26ACB36F5576C0C.d.FD3AAC3E1AF87C258F48A0A756E6924B.e.23")>
 
 
-    BASKET_VIEW_BUTTON = (By.LINK_TEXT, "Посмотреть корзину")
+    #BASKET_VIEW_BUTTON = (By.LINK_TEXT, "Посмотреть корзину") # заменю на более уникальный чтоб на англ тоже работало и уберу в base page locators класс т к эта кнопка на всех страницах
+
     ITEM_PRICE_IN_BASKET = (By.CSS_SELECTOR, "div.basket-items div.row div.col-sm-1 p")
 
 
     # название товара в сообщ совпадает с названием товара который добавили
     ITEM_NAME = (By.CSS_SELECTOR, ".col-sm-6.product_main h1")
     ITEM_NAME_IN_MESSAGE = (By.CSS_SELECTOR, ".alertinner strong")
-
 
 
 
@@ -54,5 +54,12 @@ class BasePageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
 
+    BASKET_VIEW_BUTTON = (By.CSS_SELECTOR, 'a[href$="/basket/"]')
 
-    
+
+
+# Задание: наследование и отрицательные проверки
+class BasketPageLocators():
+    BASKET_ITEMS = (By.CSS_SELECTOR, ".basket-items")  # элементы с товарами
+    EMPTY_BASKET_TEXT = (By.CSS_SELECTOR, "#content_inner > p")  # текст о пустой корзине
+

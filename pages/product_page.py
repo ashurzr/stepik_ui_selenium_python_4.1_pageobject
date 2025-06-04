@@ -3,7 +3,7 @@
 from .base_page import BasePage
 from selenium.webdriver.common.by import By
 from .locators import ProductPageLocators
-
+from .locators import BasePageLocators
 
 
 class ProductPage(BasePage):
@@ -38,9 +38,10 @@ class ProductPage(BasePage):
     def get_item_price(self):
         return self.browser.find_element(*ProductPageLocators.ITEM_PRICE).text
 
-    def go_to_basket(self):
-        self.should_be_add_to_cart_button()
-        button = self.browser.find_element(*ProductPageLocators.BASKET_VIEW_BUTTON)
+    # используется в test_guest_can_add_product_to_basket в test_product_page.py
+    def go_to_basket(self): # вроде этот метод я сама реализовывала - т е в задании не нужно было переходить в корзину чтобы сравнить цену товара с ценой в корзине
+        self.should_be_add_to_cart_button() # а здесь разве не должна быть проверка наличия кнопки  Посмотреть корзину ? вместо Добавить в корзину ?
+        button = self.browser.find_element(*BasePageLocators.BASKET_VIEW_BUTTON)
         button.click()
 
     # цена товара в корзине совпадает с ценой товара который добавили

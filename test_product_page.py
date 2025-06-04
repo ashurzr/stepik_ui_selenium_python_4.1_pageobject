@@ -15,6 +15,16 @@ import pytest
 from pages.login_page import LoginPage
 
 
+# Задание: наследование и отрицательные проверки
+from pages.basket_page import BasketPage
+from pages.locators import BasketPageLocators
+
+
+
+from pages.locators import BasePageLocators
+
+
+
 
 
 def wait_for_element(browser, locator, timeout=10):
@@ -173,6 +183,38 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
         # self.should_be_login_url()
         # self.should_be_login_form()
         # self.should_be_register_form()
+
+
+
+
+# Задание: наследование и отрицательные проверки
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+
+# Гость открывает страницу товара
+    #link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    link = "http://selenium1py.pythonanywhere.com/ru/catalogue/hacking-exposed-wireless_208/"
+    page = ProductPage(browser, link)
+    page.open()
+
+
+# Переходит в корзину по кнопке в шапке
+    page.view_basket()  # используем метод перехода в корзину
+    basket_page = BasketPage(browser, browser.current_url)
+
+
+
+# Ожидаем, что в корзине нет товаров
+    basket_page.should_be_empty()  # should_be_empty()
+
+# Ожидаем, что есть текст о том что корзина пуста
+    basket_page.should_be_text_cart_is_empty() # should_be_text_cart_is_empty()
+
+
+
+
+
+
+
 
 
 
