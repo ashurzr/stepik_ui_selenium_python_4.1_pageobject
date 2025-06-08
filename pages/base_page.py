@@ -22,6 +22,14 @@ from .locators import ProductPageLocators
 
 
 
+import string
+import random
+
+
+
+
+
+
 
 # это как бы реализация общих методов для любой страницы
 class BasePage():
@@ -116,14 +124,7 @@ class BasePage():
         # способ 2 - переход неявный, страницу инициализируем в теле теста
         # комментим -> #return LoginPage(browser=self.browser, url=self.browser.current_url) # передаем тот же самый объект браузера а в url текущий адрес
 
-    # # вторая какая то версия этого метода
-    # # Удобство поддержки тестов - инкапсуляция бизнес-логики в методах
-    # # например есть метод:
-    # def go_to_login_page(self):
-    #     link = self.browser.find_element(By.CSS_SELECTOR, "#login_link")
-    #     link.click()
-    #     alert = self.browser.switch_to.alert # и в него добавили обработку alertа вместо того чтоб добавлять alert в тест
-    #     alert.accept()
+
 
 
 
@@ -151,4 +152,14 @@ class BasePage():
     def should_be_view_cart_button(self):
         assert self.is_element_present(*BasePageLocators.BASKET_VIEW_BUTTON), "Basket view button is not visible"
 
+
+
+
+
+    # Задание: группировка тестов и setup
+    # Добавьте в BasePage роверку того, что пользователь залогинен
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
+        
 

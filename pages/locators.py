@@ -1,14 +1,28 @@
 from selenium.webdriver.common.by import By
 
 
+
+
+
+
 class MainPageLocators():
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     #LOGIN_LINK = (By.CSS_SELECTOR, "#registration_link") # селектор с ссылки шапки промоакции
+
+
 
 # Реализация локаторов для LoginPage
 class LoginPageLocators():
     REGISTRATION_FORM = (By.CSS_SELECTOR, "#register_form") # селектор формы регистрации
     LOGIN_FORM = (By.CSS_SELECTOR, "#login_form") # селектор формы логина
+
+    # Задание: группировка тестов и setup
+    REGISTRATION_EMAIL = (By.CSS_SELECTOR, "#id_registration-email")
+    REGISTRATION_PASSWORD = (By.NAME, "registration-password1")
+    REGISTRATION_CONFIRM_PASSWORD = (By.NAME, "registration-password2")
+    REGISTRATION_SUBMIT_BUTTON = (By.NAME, "registration_submit")
+
+
 
 
 # Реализация локаторов для ProductPage
@@ -55,6 +69,10 @@ class BasePageLocators():
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
 
     BASKET_VIEW_BUTTON = (By.CSS_SELECTOR, 'a[href$="/basket/"]')
+
+
+    # Задание: группировка тестов и setup
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
 
 
 

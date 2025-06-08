@@ -4,6 +4,20 @@ from .base_page import BasePage
 
 from .locators import LoginPageLocators
 
+import time
+
+
+
+# Задание: группировка тестов и setup
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+
+
+
+
+
 
 class LoginPage(BasePage):
     def should_be_login_page(self):
@@ -23,3 +37,33 @@ class LoginPage(BasePage):
     def should_be_register_form(self):
         # реализуйте проверку, что есть форма регистрации на странице
         assert self.is_element_present(*LoginPageLocators.REGISTRATION_FORM), "Registration form is not presented" # из файла locators.py
+
+
+
+    # Задание: группировка тестов и setup
+    # метод регистрирует нового пользователя
+    def register_new_user(self):
+
+        # генерация емейла и пароля
+        email_generator = str(time.time()) + "@fakemail.org"
+        password_generator = "fakepassword"
+
+
+        # нашли элемент
+        email_input = self.browser.find_element(*LoginPageLocators.REGISTRATION_EMAIL)
+        # и в элемент отправили
+        email_input.send_keys(email_generator)
+
+        # нашли элемент
+        password_input = self.browser.find_element(*LoginPageLocators.REGISTRATION_PASSWORD)
+        # и в элемент отправили
+        password_input.send_keys(password_generator)
+
+
+        confirm_password_input = self.browser.find_element(*LoginPageLocators.REGISTRATION_CONFIRM_PASSWORD)
+        confirm_password_input.send_keys(password_generator)
+
+
+        # ищем и жмем кнопку Зарегистрироваться
+        register_button = self.browser.find_element(*LoginPageLocators.REGISTRATION_SUBMIT_BUTTON)
+        register_button.click()
