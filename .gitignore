@@ -1,0 +1,5 @@
+# Служебные папки Python / pytest / IDE
+__pycache__/
+.pytest_cache/
+.qodo/
+*.pyc
