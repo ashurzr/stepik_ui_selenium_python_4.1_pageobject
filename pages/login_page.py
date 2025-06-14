@@ -1,22 +1,9 @@
-# Реализация методов для LoginPage
-
 from .base_page import BasePage
-
 from .locators import LoginPageLocators
-
 import time
-
-
-
-# Задание: группировка тестов и setup
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-
-
-
-
-
 
 
 class LoginPage(BasePage):
@@ -26,44 +13,32 @@ class LoginPage(BasePage):
         self.should_be_register_form()
 
     def should_be_login_url(self):
-        # реализуйте проверку на корректный url адрес
         assert "login" in self.browser.current_url, "'login' is not presented"
         #assert "loginn" in self.browser.current_url, "'loginn' is not presented"
 
     def should_be_login_form(self):
-        # реализуйте проверку, что есть форма логина
-        assert self.is_element_present(*LoginPageLocators.LOGIN_FORM), "Login form is not presented"  # из файла locators.py
+        assert self.is_element_present(*LoginPageLocators.LOGIN_FORM), "Login form is not presented"
 
     def should_be_register_form(self):
-        # реализуйте проверку, что есть форма регистрации на странице
-        assert self.is_element_present(*LoginPageLocators.REGISTRATION_FORM), "Registration form is not presented" # из файла locators.py
+        assert self.is_element_present(*LoginPageLocators.REGISTRATION_FORM), "Registration form is not presented"
 
 
-
-    # Задание: группировка тестов и setup
     # метод регистрирует нового пользователя
     def register_new_user(self):
-
         # генерация емейла и пароля
         email_generator = str(time.time()) + "@fakemail.org"
         password_generator = "fakepassword"
-
-
         # нашли элемент
         email_input = self.browser.find_element(*LoginPageLocators.REGISTRATION_EMAIL)
         # и в элемент отправили
         email_input.send_keys(email_generator)
-
         # нашли элемент
         password_input = self.browser.find_element(*LoginPageLocators.REGISTRATION_PASSWORD)
         # и в элемент отправили
         password_input.send_keys(password_generator)
-
-
         confirm_password_input = self.browser.find_element(*LoginPageLocators.REGISTRATION_CONFIRM_PASSWORD)
         confirm_password_input.send_keys(password_generator)
-
-
         # ищем и жмем кнопку Зарегистрироваться
         register_button = self.browser.find_element(*LoginPageLocators.REGISTRATION_SUBMIT_BUTTON)
         register_button.click()
+        
